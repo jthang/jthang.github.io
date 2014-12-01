@@ -1,4 +1,4 @@
 jthang.github.io
 ================
 
-Mathematical Musing Site
+Mathematical Musings Site
