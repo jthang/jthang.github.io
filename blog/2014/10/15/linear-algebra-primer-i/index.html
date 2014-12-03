@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Mathematical Musings</title>
+        <title>Linear Algebra Primer I</title>
         <meta charset="utf-8" />
            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
@@ -52,11 +52,11 @@
       <a href="/">Jens Thang</a>
     </p>
     <p id="user_desc">
-      Maths
+      Data Hacker
       <br>
-      Stats
       <br>
-      Machine Learning
+      <br>
+      Machine Learning : Bayesian : Python
       <br>
       <br>
       <a href="mailto:jensthang[at]gmail.com">Email</a><br />
@@ -65,26 +65,25 @@
       <h3>Recent Posts</h3>
       <ul id="recent_posts">
         <li>
-            <a href="/blog/2014/11/11/linear-algebra-basic-concepts/">Linear Algebra Basic Concepts</a>
+            <a href="/blog/2014/11/08/linear-algebra-primer-ii/">Linear Algebra Primer II</a>
+        </li>
+        <li>
+            <a href="/blog/2014/10/15/linear-algebra-primer-i/">Linear Algebra Primer I</a>
         </li>
       </ul>
     </div>
   </div>
-        
-        
-
-    
-            <aside id="featured">
-                <div class="body">
-                    <article>
-                        <h1 class="entry-title"><a href="/blog/2014/11/11/linear-algebra-basic-concepts/">Linear Algebra Basic Concepts</a></h1>
+  <aside id="featured">
+    <div class="body">
+        <article>
+            <h1 class="entry-title"><a href="/blog/2014/10/15/linear-algebra-primer-i/">Linear Algebra Primer I</a></h1>
 <div class="post-info">
 	<ul>
         <li class="vcard author">
                  by&nbsp;<a class="url fn" href="/author/jens-thang.html">Jens Thang</a>
         </li>
-        <li class="published" title="2014-11-11T21:00:00+08:00">
-          on&nbsp;Nov 11, 2014
+        <li class="published" title="2014-10-15T21:00:00+08:00">
+          on&nbsp;Oct 15, 2014
         </li>
 
 	</ul>
@@ -1606,11 +1605,12 @@ table.dataframe th, td {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [1]:
+In [4]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
 
@@ -1663,12 +1663,12 @@ c =
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">NameError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-1-09624d81f5ef&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">      7</span> <span class="ansigreen">print</span> <span class="ansiblue">"a =\n"</span><span class="ansiblue">,</span> a <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">      8</span> <span class="ansigreen">print</span> <span class="ansiblue">"b =\n"</span><span class="ansiblue">,</span> b <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">----&gt; 9</span><span class="ansired"> </span><span class="ansigreen">print</span> <span class="ansiblue">"c =\n"</span><span class="ansiblue">,</span> c <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">     10</span> <span class="ansigreen">print</span> <span class="ansiblue">"Addition"</span><span class="ansiblue"></span>
-<span class="ansigreen">     11</span> <span class="ansigreen">print</span> <span class="ansiblue">"---------"</span><span class="ansiblue"></span>
+<span class="ansigreen">&lt;ipython-input-4-712811ac5687&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      8</span> <span class="ansigreen">print</span> <span class="ansiblue">"a =\n"</span><span class="ansiblue">,</span> a <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
+<span class="ansigreen">      9</span> <span class="ansigreen">print</span> <span class="ansiblue">"b =\n"</span><span class="ansiblue">,</span> b <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
+<span class="ansigreen">---&gt; 10</span><span class="ansired"> </span><span class="ansigreen">print</span> <span class="ansiblue">"c =\n"</span><span class="ansiblue">,</span> c <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
+<span class="ansigreen">     11</span> <span class="ansigreen">print</span> <span class="ansiblue">"Addition"</span><span class="ansiblue"></span>
+<span class="ansigreen">     12</span> <span class="ansigreen">print</span> <span class="ansiblue">"---------"</span><span class="ansiblue"></span>
 
 <span class="ansired">NameError</span>: name 'c' is not defined</pre>
 </div>
@@ -1688,7 +1688,7 @@ c =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [2]:
+In [5]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -1777,7 +1777,7 @@ Scalar Multiplication
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [3]:
+In [6]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -1869,7 +1869,7 @@ Matrix C =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [4]:
+In [7]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -1920,7 +1920,7 @@ x . yT =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [5]:
+In [8]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -1968,7 +1968,7 @@ xT . A =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [6]:
+In [9]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2039,7 +2039,7 @@ A . C =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [7]:
+In [10]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2102,7 +2102,7 @@ AB = BA
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [8]:
+In [11]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2180,7 +2180,7 @@ D =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [9]:
+In [12]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2249,7 +2249,7 @@ Property 3 =
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [10]:
+In [13]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2458,15 +2458,13 @@ Property 4 = True
 </div>
 </div>
 </div>
-                    </article>
-                </div>
-            </aside><!-- /#featured -->
-            
-        
+        </article>
+    </div>
 	
 <!-- <footer id="contentinfo" > -->
         <!-- <address id="about" class="vcard "> -->
-        <!-- Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a>, which takes -->
+        <!-- Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a> -->
+        <!-- , which takes -->
         <!-- great advantage of <a href="http://python.org" target="_blank">Python</a>.  -->
 
         <!-- </address> <!-- /#about -->

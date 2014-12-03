@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>Linear Algebra Basic Concepts</title>
+        <title>Linear Algebra Primer II</title>
         <meta charset="utf-8" />
            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
@@ -52,11 +52,11 @@
       <a href="/">Jens Thang</a>
     </p>
     <p id="user_desc">
-      Maths
+      Data Hacker
       <br>
-      Stats
       <br>
-      Machine Learning
+      <br>
+      Machine Learning : Bayesian : Python
       <br>
       <br>
       <a href="mailto:jensthang[at]gmail.com">Email</a><br />
@@ -65,34 +65,30 @@
       <h3>Recent Posts</h3>
       <ul id="recent_posts">
         <li>
-            <a href="/blog/2014/11/11/linear-algebra-basic-concepts/">Linear Algebra Basic Concepts</a>
+            <a href="/blog/2014/11/08/linear-algebra-primer-ii/">Linear Algebra Primer II</a>
+        </li>
+        <li>
+            <a href="/blog/2014/10/15/linear-algebra-primer-i/">Linear Algebra Primer I</a>
         </li>
       </ul>
     </div>
   </div>
-<section id="content" >
+  <aside id="featured">
     <div class="body">
-      <article>
-        <header>
-          <h1 class="entry-title">
-            <a href="/blog/2014/11/11/linear-algebra-basic-concepts/" rel="bookmark"
-               title="Permalink to Linear Algebra Basic Concepts">Linear Algebra Basic Concepts</a></h1>
-
-        </header>
-
-        <div class="entry-content">
+        <article>
+            <h1 class="entry-title"><a href="/blog/2014/11/08/linear-algebra-primer-ii/">Linear Algebra Primer II</a></h1>
 <div class="post-info">
 	<ul>
         <li class="vcard author">
                  by&nbsp;<a class="url fn" href="/author/jens-thang.html">Jens Thang</a>
         </li>
-        <li class="published" title="2014-11-11T21:00:00+08:00">
-          on&nbsp;Nov 11, 2014
+        <li class="published" title="2014-11-08T18:00:00+08:00">
+          on&nbsp;Nov 08, 2014
         </li>
 
 	</ul>
 
-</div><!-- /.post-info -->          <style type="text/css">.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}
+</div><!-- /.post-info --><style type="text/css">.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}
 .clearfix:after{clear:both}
 .hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}
 .input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
@@ -1567,8 +1563,11 @@ table.dataframe th, td {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="introduction">Introduction</h3>
-<p>Linear algebra is a great way for us to solve a system of equations. It can be used to describe mathematical problems in two dimensions, we can also extend many of the concepts to multi-dimensions. Linear algebra offers an elegant way of representing multi-dimensional mathematical reasonsing. Important concepts like matrices, vectors, subspaces, dimensionality, inverses, eigenvalue decompositions help us to understand multi-dimension concepts and visualize them.</p>
+<h3 id="linear-independence">Linear Independence</h3>
+<p>We say that a set of vectors is linearly independent when none of them can be represented by a linear combination of the other vectors. A linear combination refers to each vector being scaled by a constant or added together. Intuitively, there are no non-trivial relations between each vector in the set and hence are they independent of each other. 2 vectors are linearly independent if they do not lie on the line.</p>
+<p>More formally, we say that vectors <span class="math">\(v_1, v_2,...v_n\)</span> are linearly independent when we solve for the linear combination <span class="math">\(c_1v_1 + c_2v_2 + ... + c_nv_n = 0\)</span>, the only solution is when <span class="math">\(c_1, c_2 ... c_n = 0\)</span>.</p>
+<p>When one of the scalars is not zero, the vectors are linearly dependent. Some of the vectors are redundant and we can remove them.</p>
+<p>Sometimes we have a set of vectors and need to determine whether the vectors are linearly independent of each other. This is necessary to determine if vectors form a basis or how many independent equations are there.</p>
 </div>
 </div>
 </div>
@@ -1577,62 +1576,44 @@ table.dataframe th, td {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="basic-notations">Basic Notations</h3>
-<ul>
-<li><span class="math">\(A \in \mathbb{r^{mxn}}\)</span>: <strong>Matrix</strong> with m rows and n columns</li>
-<li><span class="math">\(x \in \mathbb{r^{n}}\)</span>: <strong>Vector</strong> with n entries (which can be rows or columns)</li>
-</ul>
-<p>Typically we will differentiate <strong>Column vector</strong> and <strong>Row vector</strong> like this:</p>
-<ul>
-<li><span class="math">\(x \in \mathbb{r^{n}}\)</span>: Column vector with n rows and 1 column</li>
-<li><span class="math">\(x^T \in \mathbb{r^{n}}\)</span>: Row vector with 1 rows and n columns</li>
-</ul>
-<p>To point to a specific element in a matrix we use the notation:</p>
-<ul>
-<li><span class="math">\(a_{i,j}\)</span> - ith row and jth column</li>
-<li><span class="math">\(a_{j}\)</span> - jth column</li>
-<li><span class="math">\(a_{i}^T\)</span> - ith row</li>
-</ul>
-<p><span class="math">\(A_{m,n} = \begin{pmatrix} a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,n} \\ a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{m,1} &amp; a_{m,2} &amp; \cdots &amp; a_{m,n} \end{pmatrix}\)</span></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="vector-operations">Vector Operations</h3>
+<h3 id="determinant-method">Determinant Method</h3>
+<p>Determinants are very useful for the analysis and solution for a system of linear equations. According to Cramer's rule, if the determinant of a system of linear equation is non-zero, it has a unique solution.</p>
+<p>The determinant of a matrix is used to tell if a square matrix is singular. If the determinant is zero, it is a singular matrix, and hence no solution exists. When there is no solution, we say that the vectors that form the column vectors of a matrix are not linearly independent.</p>
+<p>Vectors are linearly independent <span class="math">\(\iff\)</span> determinant <span class="math">\(\neq\)</span> 0</p>
+<p>A useful way to think about determinant is to think of it as a volume of a balloon shape in n-dimension space. For a 2-D space, if 2 vectors are linearly dependent, they do not contribute to the volume/area, hence the determinant will be zero.</p>
+<p>Determine if the following sets of vectors are linearly independent.</p>
+<p><span class="math">\(A= \begin{bmatrix} 2 \\ 5 \\ 3 \\ \end{bmatrix} , \begin{bmatrix} 1 \\ -2 \\ 4 \\ \end{bmatrix} , \begin{bmatrix} 4 \\ 2 \\ -3 \\ \end{bmatrix}\)</span></p>
+<p><span class="math">\(B= \begin{bmatrix} 2 \\ 5 \\ 3 \\ \end{bmatrix} , \begin{bmatrix} 1 \\ -2 \\ 4 \\ \end{bmatrix} , \begin{bmatrix} 3 \\ 3 \\ 7 \\ \end{bmatrix}\)</span></p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [1]:
+In [105]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
 <div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="k">print</span> <span class="s">"Create vectors"</span>
-<span class="k">print</span> <span class="s">"--------------"</span>
-<span class="k">print</span> <span class="s">"a =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">a</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"b =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">b</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"c =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Addition"</span>
-<span class="k">print</span> <span class="s">"---------"</span>
-<span class="k">print</span> <span class="s">"a + b =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Subtraction"</span>
-<span class="k">print</span> <span class="s">"-----------"</span>
-<span class="k">print</span> <span class="s">"a - b =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"b - a =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Scalar Multiplication"</span>
-<span class="k">print</span> <span class="s">"--------------"</span>
-<span class="k">print</span> <span class="s">"3 X a =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">a</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"4(a) - 2(b) =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">a</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
+<span class="n">Av1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Av2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Av3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">Av1</span><span class="p">,</span> <span class="n">Av2</span><span class="p">,</span> <span class="n">Av3</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="s">"The determinant is:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">"Set A is linearly independent:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span>
+
+<span class="n">Bv1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Bv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Bv3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">Bv1</span><span class="p">,</span> <span class="n">Bv2</span><span class="p">,</span> <span class="n">Bv3</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="s">"The determinant is:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">"Set B is linearly independent:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">B</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>
@@ -1642,120 +1623,10 @@ In [1]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Create vectors
---------------
-a =
-[[ 0]
- [-1]
- [ 2]
- [ 3]] 
-
-b =
-[[ 4]
- [-2]
- [ 0]
- [ 5]] 
-
-c =
-
-</pre>
-</div>
-</div>
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_pyerr">
-<pre>
-<span class="ansired">---------------------------------------------------------------------------</span>
-<span class="ansired">NameError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-1-09624d81f5ef&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">      7</span> <span class="ansigreen">print</span> <span class="ansiblue">"a =\n"</span><span class="ansiblue">,</span> a <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">      8</span> <span class="ansigreen">print</span> <span class="ansiblue">"b =\n"</span><span class="ansiblue">,</span> b <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">----&gt; 9</span><span class="ansired"> </span><span class="ansigreen">print</span> <span class="ansiblue">"c =\n"</span><span class="ansiblue">,</span> c <span class="ansiblue">,</span> <span class="ansiblue">"\n"</span><span class="ansiblue"></span>
-<span class="ansigreen">     10</span> <span class="ansigreen">print</span> <span class="ansiblue">"Addition"</span><span class="ansiblue"></span>
-<span class="ansigreen">     11</span> <span class="ansigreen">print</span> <span class="ansiblue">"---------"</span><span class="ansiblue"></span>
-
-<span class="ansired">NameError</span>: name 'c' is not defined</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="matrix-basic-operations">Matrix Basic Operations</h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [2]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
-
-<span class="k">print</span> <span class="s">"Create matrices A and B"</span>
-<span class="k">print</span> <span class="s">"----------------------"</span>
-<span class="k">print</span> <span class="s">"A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"B =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">B</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Addition"</span>
-<span class="k">print</span> <span class="s">"---------"</span>
-<span class="k">print</span> <span class="s">"A + B =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Subtraction"</span>
-<span class="k">print</span> <span class="s">"-----------"</span>
-<span class="k">print</span> <span class="s">"A - B =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span> <span class="o">-</span> <span class="n">B</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"B - A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">B</span> <span class="o">-</span> <span class="n">A</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Scalar Multiplication"</span>
-<span class="k">print</span> <span class="s">"---------------------"</span>
-<span class="k">print</span> <span class="s">"3 X A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">A</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Create matrices A and B
-----------------------
-A =
-[[1 2]
- [3 4]] 
-
-B =
-[[5 6]
- [7 8]] 
-
-Addition
----------
-A + B =
-[[ 6  8]
- [10 12]] 
-
-Subtraction
------------
-A - B =
-[[-4 -4]
- [-4 -4]] 
-
-B - A =
-[[4 4]
- [4 4]] 
-
-Scalar Multiplication
----------------------
-3 X A =
-[[ 3  6]
- [ 9 12]] 
-
+The determinant is: 121.0
+Set A is linearly independent: True
+The determinant is: 0.0
+Set B is linearly independent: False
 
 </pre>
 </div>
@@ -1768,93 +1639,7 @@ Scalar Multiplication
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="matrix-multiplication">Matrix Multiplication</h3>
-<ul>
-<li>Vector-Vector Products</li>
-<li>Matrix-Vector Products</li>
-<li>Matrix-Matrix Products</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [3]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">xT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">xT</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-<span class="n">yT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">yT</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
-
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
-
-<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
-
-<span class="k">print</span> <span class="s">"Create matrices &amp; vectors"</span>
-<span class="k">print</span> <span class="s">"-------------------------"</span>
-<span class="k">print</span> <span class="s">"Column Vector x =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Row Vector xT =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">xT</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Column Vector y =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">y</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Row Vector yT =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">yT</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Matrix A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Matrix B =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">B</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Matrix C =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">C</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Create matrices &amp; vectors
--------------------------
-Column Vector x =
-[[3]
- [4]
- [5]] 
-
-Row Vector xT =
-[3 4 5] 
-
-Column Vector y =
-[[1]
- [2]
- [3]] 
-
-Row Vector yT =
-[1 2 3] 
-
-Matrix A =
-[[2 1 4]
- [3 5 6]
- [4 2 7]] 
-
-Matrix B =
-[[1 4 3]
- [8 5 4]
- [3 6 2]] 
-
-Matrix C =
-[[2 1 5]
- [8 5 5]
- [2 1 2]] 
-
-
-</pre>
-</div>
-</div>
+<p>We can see in Set B, vector C can can be represented as vector A and B. Therefore, it is not linearly independent.</p>
 </div>
 </div>
 </div>
@@ -1863,483 +1648,17 @@ Matrix C =
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="vector-vector">Vector-vector<br /></h3>
-<p><span class="math">\(x, y \in \mathbb{R^p} \rightarrow \mathbb{R}\)</span> <br /> Inner Product: <span class="math">\(x^Ty = \sum_{i=1}^p x_iy_i\)</span></p>
-<p>Outer Product: <span class="math">\(xy^T = \begin{pmatrix} x_1y_1 &amp; x_1y_2 &amp; \cdots &amp; x_1y_n \\ x_2y_1 &amp; x_2y_2 &amp; \cdots &amp; x_2y_n \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ x_my_1 &amp; x_my_2 &amp; \cdots &amp; x_m y_n \\ \end{pmatrix}\)</span></p>
+<h3 id="rank">Rank</h3>
+<p>Some basic definitions of ranks: * Column Rank - Max number of linearly independent columns in a matrix * Row Rank - Max number of linearly independent rows in a matrix</p>
+<p>For any matrix A, the column rank is equal to the row rank. There is generally no need to distinguish between them. A full rank is the rank that equal to the minimum of no. of columns or rows.</p>
+<p>Basic Properties of a Rank: * rank(<span class="math">\(A\)</span>) = rank(<span class="math">\(A^T\)</span>) * rank(<span class="math">\(AB\)</span>) <span class="math">\(\leq\)</span> min(rank(<span class="math">\(A\)</span>), rank(<span class="math">\(B\)</span>)) * rank(<span class="math">\(A + B\)</span>) <span class="math">\(\leq\)</span> rank(<span class="math">\(A\)</span>) + rank(<span class="math">\(B\)</span>)</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [4]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">"Inner Product"</span>
-<span class="k">print</span> <span class="s">"-------------"</span>
-<span class="k">print</span> <span class="s">"xT . y =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xT</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Outer Product"</span>
-<span class="k">print</span> <span class="s">"-------------"</span>
-<span class="k">print</span> <span class="s">"x . yT =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yT</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Inner Product
--------------
-xT . y =
-[26] 
-
-Outer Product
--------------
-x . yT =
-[[ 3  6  9]
- [ 4  8 12]
- [ 5 10 15]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="matrix-vector">Matrix-vector<br /></h3>
-<p><span class="math">\(x \in \mathbb{R^{n}}, M \in \mathbb{R^{mxn}} \rightarrow \mathbb{R^{n}}\)</span></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [5]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">"A . x =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"A . xT =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">xT</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"xT . A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xT</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-A . x =
-[[30]
- [59]
- [55]] 
-
-A . xT =
-[30 59 55] 
-
-xT . A =
-[38 33 71] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="matrix-matrix">Matrix-Matrix</h3>
-<p><span class="math">\(A \in \mathbb{R^{mxk}}, B \in \mathbb{R^{kxn}} \rightarrow \mathbb{R^{mxn}}\)</span></p>
-<p>Note that no. of columns in A (k) must equal no. of rows in B (k). Otherwise, we get an error if we try to multiply them.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [6]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">"Matrix-Matrix"</span>
-<span class="k">print</span> <span class="s">"-------------"</span>
-<span class="k">print</span> <span class="s">"A . B =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Shape =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"B . C =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Shape =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"No. of columns NOT equal no. of Rows"</span>
-<span class="k">print</span> <span class="s">"-------------------------------------"</span>
-<span class="k">print</span> <span class="s">"A . C =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Matrix-Matrix
--------------
-A . B =
-[[22 37 18]
- [61 73 41]
- [41 68 34]] 
-
-Shape =
-(3, 3) 
-
-B . C =
-[[40 24 31]
- [64 37 73]
- [58 35 49]] 
-
-Shape =
-(3, 3) 
-
-No. of columns NOT equal no. of Rows
--------------------------------------
-A . C =
-[[20 11 23]
- [58 34 52]
- [38 21 44]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="properties-of-matrix-multiplication">Properties of Matrix multiplication</h3>
-<ul>
-<li>A(BC) = (AB)C (associative)</li>
-<li>A(B+C) = AB + AC (distributive)</li>
-<li>A X B <span class="math">\(\neq\)</span> B X A (not commutative)</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [7]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">"Associative"</span>
-<span class="k">print</span> <span class="s">"-----------"</span>
-<span class="k">print</span> <span class="s">"(AB)C = A(BC)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">),</span> <span class="n">C</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">)),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Distributive"</span>
-<span class="k">print</span> <span class="s">"------------"</span>
-<span class="k">print</span> <span class="s">"A(B+C) = AB + AC</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="o">+</span><span class="n">C</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">C</span><span class="p">),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Not Commutative"</span>
-<span class="k">print</span> <span class="s">"---------------"</span>
-<span class="k">print</span> <span class="s">"AB = BA </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>  <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Associative
------------
-(AB)C = A(BC)
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Distributive
-------------
-A(B+C) = AB + AC
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Not Commutative
----------------
-AB = BA 
-[[False False False]
- [False False False]
- [False False False]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="identity-matrix">Identity matrix</h3>
-<p>Property: <br /> -AI = A = IA</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [8]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-
-<span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-
-<span class="k">print</span> <span class="s">"Identity Matrix"</span>
-<span class="k">print</span> <span class="s">"---------------"</span>
-<span class="k">print</span> <span class="s">"I =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">I</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"AI = A = IA"</span>
-<span class="k">print</span> <span class="s">"----------"</span>
-<span class="k">print</span> <span class="s">"AI = A </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"IA = A </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Diagonal Matrix"</span>
-<span class="k">print</span> <span class="s">"---------------"</span>
-<span class="k">print</span> <span class="s">"D =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">D</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Identity Matrix
----------------
-I =
-[[1 0 0]
- [0 1 0]
- [0 0 1]] 
-
-AI = A = IA
-----------
-AI = A 
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-IA = A 
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Diagonal Matrix
----------------
-D =
-[[-2  0  0]
- [ 0  3  0]
- [ 0  0  1]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="transpose">Transpose</h3>
-<p>Transpose matrix is when all the rows and the columns swapped. It has the following properties:</p>
-<p><span class="math">\((A^T)^T = A\)</span> <br /> <span class="math">\((AB)^T = B^T A^T\)</span> <br /> <span class="math">\((A+B)^T = A^T + B^T\)</span> <br /></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [9]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">"Transpose Matrix"</span>
-<span class="k">print</span> <span class="s">"----------------"</span>
-<span class="k">print</span> <span class="s">"A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"A.Transpose =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Property 1 =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="o">==</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Property 2 =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">)),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Property 3 =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">B</span><span class="p">),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Transpose Matrix
-----------------
-A =
-[[2 1 4]
- [3 5 6]
- [4 2 7]] 
-
-A.Transpose =
-[[2 3 4]
- [1 5 2]
- [4 6 7]] 
-
-Property 1 =
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Property 2 =
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Property 3 =
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="symmetric-matrix">Symmetric Matrix</h3>
-<p>A square matrix is symmetric if <span class="math">\(S = S^T\)</span>. It is said to be anti-symmetric if <span class="math">\(S = -S^T\)</span></p>
-<p>Any square matrix can be represented as a sum of a symmetric matrix and an anti-symmetric matrix such that:</p>
-<p><span class="math">\(A = \frac{1}{2}(A + A^T) + \frac{1}{2}(A + A^T)\)</span></p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [10]:
-</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
-
-<span class="n">AS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span>
-             <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">],])</span>
-
-<span class="k">print</span> <span class="s">"Symmetric Matrix"</span>
-<span class="k">print</span> <span class="s">"---------------"</span>
-<span class="k">print</span> <span class="s">"S = </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">S</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"S = S.T </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">S</span> <span class="o">==</span> <span class="n">S</span><span class="o">.</span><span class="n">T</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Anti-Symmetric Matrix"</span>
-<span class="k">print</span> <span class="s">"---------------------"</span>
-<span class="k">print</span> <span class="s">"AS = </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">AS</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"AS = -AS.T </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">AS</span> <span class="o">==</span> <span class="o">-</span><span class="n">AS</span><span class="o">.</span><span class="n">T</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Square Matrix as a sum of Symmetric and Anti-Symmetric Matrix"</span>
-<span class="k">print</span> <span class="s">"-------------------------------------------------------------"</span>
-<span class="k">print</span> <span class="s">"A = 0.5(A + A.T) + 0.5(A - A.T) </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span> <span class="o">==</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Symmetric Matrix
----------------
-S = 
-[[ 1  3  2]
- [ 3  4 -1]
- [ 2 -1  5]] 
-
-S = S.T 
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-Anti-Symmetric Matrix
----------------------
-AS = 
-[[ 0 -3]
- [ 3  0]] 
-
-AS = -AS.T 
-[[ True  True]
- [ True  True]] 
-
-Square Matrix as a sum of Symmetric and Anti-Symmetric Matrix
--------------------------------------------------------------
-A = 0.5(A + A.T) + 0.5(A - A.T) 
-[[ True  True  True]
- [ True  True  True]
- [ True  True  True]] 
-
-
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="trace-of-a-matrix">Trace of a Matrix</h3>
-<p>The trace of a matrix is the sum of the diagonal elements in the matrix. There are various properties of the trace:</p>
-<ul>
-<li><span class="math">\(tr(A) = tr(A^T)\)</span> <br /></li>
-<li><span class="math">\(tr(A + B) = tr(A) + tr(B)\)</span> <br /></li>
-<li><span class="math">\(tr(cA) = c tr(A)\)</span> <br /></li>
-<li>If AB is square, <span class="math">\(tr(AB) = tr(BA)\)</span> <br /></li>
-<li>If ABC is square, <span class="math">\(tr(ABC) = tr(BCA) = tr(CBA)\)</span> ... etc<br /></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">
-In [11]:
+In [106]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
@@ -2347,23 +1666,15 @@ In [11]:
              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
 
-<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
-              <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
 
-<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-              <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
-
-<span class="k">print</span> <span class="s">"Trace Matrix"</span>
-<span class="k">print</span> <span class="s">"------------"</span>
-<span class="k">print</span> <span class="s">"A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"tr(A) ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Property 1 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
-<span class="k">print</span> <span class="s">"Property 2 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Property 3 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Property 4 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">))</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">A</span><span class="p">))</span>
-<span class="k">print</span> <span class="s">"Property 5 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">))</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">"Rank of A ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"Rank of B ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"Property 1 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="k">print</span> <span class="s">"Property 2 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+<span class="k">print</span> <span class="s">"Property 3 ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2373,20 +1684,11 @@ In [11]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Trace Matrix
-------------
-A =
-[[2 1 4]
- [3 5 6]
- [4 2 7]] 
-
-tr(A) = 14 
-
+Rank of A = 3
+Rank of B = 2
 Property 1 = True
 Property 2 = True
 Property 3 = True
-Property 4 = True
-Property 5 = True
 
 </pre>
 </div>
@@ -2399,41 +1701,25 @@ Property 5 = True
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="norm-of-a-vector">Norm of a Vector</h3>
-<p>The Norm of a vector <span class="math">\(\| x \|\)</span> is the measure of length of vector. The most commonly used vector norm, often called "the norm" is the L2-norm, given by:</p>
-<p><span class="math">\(\| x \|_2 = \sqrt{\sum_{i=1}^{n} x_i^2}\)</span></p>
-<p>Other common norms includes: <br /></p>
-<p><span class="math">\(l_1\)</span> norm: <span class="math">\(\| x \|_1 = \sum_{i=1}^{n} \mid x_i \mid\)</span> <br /> <span class="math">\(l_\infty\)</span> norm: <span class="math">\(\| x \|_1 = \max_i \mid x_i \mid\)</span></p>
-<p>Useful Equation for length: <span class="math">\(\| x \|_1^2 = \vec{a}.\vec{a}\)</span></p>
-<p>The norm of a vector has the following properties:</p>
-<ul>
-<li><span class="math">\(\mid x \mid \geq 0\)</span> - non-negativity</li>
-<li><span class="math">\(\mid x \mid = 0 \iff x = 0\)</span> - definiteness</li>
-<li><span class="math">\(\mid kx \mid = \mid k \mid \mid x \mid\)</span> - homogeneity</li>
-<li><span class="math">\(\mid x + y \mid \leq \mid x \mid + \mid y \mid\)</span> - triangle inequality</li>
-</ul>
+<p>Another way to compute the rank is to use the Singular Value Decomposition (SVD).</p>
+<p>Rank of the matrix = Number of non-zero singular values</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
-In [12]:
+In [107]:
 </div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">rankA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"Rank of A ="</span><span class="p">,</span> <span class="n">rankA</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-
-<span class="k">print</span> <span class="s">"Norm Vector"</span>
-<span class="k">print</span> <span class="s">"-----------"</span>
-<span class="k">print</span> <span class="s">"A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
-<span class="k">print</span> <span class="s">"Property 1 ="</span><span class="p">,</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-<span class="k">print</span> <span class="s">"Property 2 ="</span><span class="p">,</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">0</span>
-<span class="k">print</span> <span class="s">"Property 3 ="</span><span class="p">,</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">"Property 4 ="</span><span class="p">,</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">LA</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="n">rankB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="mf">1e-12</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"Rank of B ="</span><span class="p">,</span> <span class="n">rankB</span>
 </pre></div>
 </div>
 </div>
@@ -2443,17 +1729,8 @@ In [12]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Norm Vector
------------
-A =
-[[2 1 4]
- [3 5 6]
- [4 2 7]] 
-
-Property 1 = True
-Property 2 = True
-Property 3 = True
-Property 4 = True
+Rank of A = 3
+Rank of B = 2
 
 </pre>
 </div>
@@ -2461,15 +1738,89 @@ Property 4 = True
 </div>
 </div>
 </div>
-        </div><!-- /.entry-content -->
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="inverse-matrix">Inverse Matrix</h3>
+<p>A square matrix (A) is invertible (non-singular) if there is a matrix (<span class="math">\(A^{-1}\)</span>) which satisfy the following equation. We do a matrix inversion to find the matrix <span class="math">\(A^{-1}\)</span> which is known as the inverse matrix.</p>
+<p><span class="math">\(A A^{-1} = I = A^{-1} A\)</span></p>
+<p>Basic properties of the inverse: * <span class="math">\((A^{-1})^{-1} = A\)</span> * <span class="math">\((AB)^{-1} = B^{-1}A^{-1}\)</span> * <span class="math">\((A^{-1})^T = (A^T)^{-1}\)</span></p>
+<p>We need to be aware that the inverse matrix exists only if there is a unique solution. If the columns in A are linearly independent, there will be a <span class="math">\(A^{-1}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In [130]:
+</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+<span class="n">invA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
 
-      </article>
+<span class="k">print</span> <span class="s">"Invertible (non-singular)"</span>
+<span class="k">print</span> <span class="s">"-------------------------"</span>
+<span class="k">print</span> <span class="s">"Inverse of A =</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">invA</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span>
+<span class="k">print</span> <span class="s">"No inverse (Singular)"</span>
+<span class="k">print</span> <span class="s">"---------------------"</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="c"># invA = np.linalg.inv(B)</span>
+<span class="k">print</span> <span class="s">"If the columns are not linearly independent, "</span>
+<span class="k">print</span> <span class="s">"we will get an error if we run the code."</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+Invertible (non-singular)
+-------------------------
+Inverse of A =
+[[-3.29 -0.14  2.  ]
+ [-0.43  0.29  0.  ]
+ [ 2.    0.   -1.  ]] 
+
+No inverse (Singular)
+---------------------
+If the columns are not linearly independent, 
+we will get an error if we run the code.
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="orthogonal-vectors">Orthogonal Vectors</h3>
+<p>Orthogonal has the same meaning for perpendicular. We know that when 2 vectors (X and Y) are orthogonal if their dot product <span class="math">\(x^Ty = 0\)</span>. The vector is normalized when <span class="math">\(\|x\|=1\)</span>. For a square matrix, it is orthogonal when all its columns are normalized and orthogonal (i.e orthonormal).</p>
+<h3 id="span-range-nullspace">Span, Range, Nullspace</h3>
+<p>Span of a set of vectors is the set of all linear combinations of the vector set. The range is of a matrix is the span of the columns of matrix A. Nullspace is the set of vectors that is equal to zero when mulitplied by A. The orthogonal complement of a subspace V is the set of vectors which are orthogonal to all vectors in V.</p>
+<p>Nullspace: <span class="math">\(N(A) = {x \in \mathbb{R}^{n}: Ax = 0}\)</span></p>
+</div>
+</div>
+</div>
+        </article>
     </div>
-</section>
 	
 <!-- <footer id="contentinfo" > -->
         <!-- <address id="about" class="vcard "> -->
-        <!-- Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a>, which takes -->
+        <!-- Proudly powered by <a href="http://getpelican.com/" target="_blank">Pelican</a> -->
+        <!-- , which takes -->
         <!-- great advantage of <a href="http://python.org" target="_blank">Python</a>.  -->
 
         <!-- </address> <!-- /#about -->

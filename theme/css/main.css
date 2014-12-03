@@ -42,10 +42,19 @@ h2 {
   font-size: 24px;
   font-weight: 300;
 }
-h3 {font-size: 1.429em} /* 20px */
+h3 {font-size: 1.429em; margin-bottom: .5em;}
 h4 {font-size: 1.286em} /* 18px */
 h5 {font-size: 1.143em} /* 16px */
 h6 {font-size: 1em}     /* 14px */
+
+h3 a:link, #featured h3 a:visited {color: #000305; text-decoration: none;}
+h3 a:hover, #featured h3 a:active {color: #fff;}
+
+/*#featured h1 {color: #333; font-size: 2em; margin-bottom: 0.333em;}
+#featured h2 {color: #333; font-size: 1.714em; margin-bottom: 0.333em;}
+#featured h3 {font-size: 1.429em; margin-bottom: .5em;}
+#featured h3 a:link, #featured h3 a:visited {color: #000305; text-decoration: none;}
+#featured h3 a:hover, #featured h3 a:active {color: #fff;}*/
 
 h1, h2, h3, h4, h5, h6 {
     background: transparent;
